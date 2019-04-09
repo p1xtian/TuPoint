@@ -9,6 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import t.local.tupoint.config.Globals;
+import t.local.tupoint.interfaces.InterfaceRetrofit;
+import t.local.tupoint.models.Admin;
+
 public class RegisterAdminActivity extends AppCompatActivity {
 
     @Override
@@ -24,9 +32,9 @@ public class RegisterAdminActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
 
         //Declarando datos desde la vista
-        EditText eT_email = findViewById(R.id.eT_email);
-        EditText eT_password = findViewById(R.id.eT_password);
-        EditText eT_ruc = findViewById(R.id.eT_ruc);
+        final EditText eT_email = findViewById(R.id.eT_email);
+        final EditText eT_password = findViewById(R.id.eT_password);
+        final EditText eT_ruc = findViewById(R.id.eT_ruc);
 
         // Resetear errores.
         eT_email.setError(null);
@@ -80,9 +88,65 @@ public class RegisterAdminActivity extends AppCompatActivity {
         }
         else {
             Log.d("=TuPoint=>", "OK:" + email + " " + password + " " + ruc);
+
+            //Uso del WEBSERVICES
+
+            // Anokis
+
+            Globals globals = new Globals();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(globals.SpringBoot)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            InterfaceRetrofit services = retrofit.create(InterfaceRetrofit.class);
+
+            Admin adminToSave = new Admin(0,email,password,ruc,"","","1");
+
+            services.SaveAdmin(adminToSave)
+                    .
+                            enqueue(new retrofit2.Callback<Admin>() {
+
+
+                                @Override
+                                public void onResponse(Call<Admin> call, Response<Admin> response) {
+
+                                    if(response.body() == null)
+                                    {
+                                        Log.d("=TuPoint=>", "getUser - No data");
+                                        Toast.makeText(getApplicationContext(),
+                                                "Credentials error" ,
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                    else
+                                    {
+                                        Admin admin = response.body();
+                                        Log.d("=TuPoint=>", "Email Attempt Login: "+ admin.getEmail());
+
+
+                                        Toast.makeText(getApplicationContext(),
+                                                "Grabado" ,
+                                                Toast.LENGTH_SHORT).show();
+
+                                        eT_email.setText("");
+                                        eT_password.setText("");
+                                        eT_ruc.setText("");
+
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Admin> call, Throwable t) {
+                                    Toast.makeText(getApplicationContext(),
+                                            "Server Error" ,
+
+                                            Toast.LENGTH_SHORT).show();
+                                    Log.d("=TuPoint=>",t.toString());
+                                }
+                            });
         }
-
-
 
 
     }
