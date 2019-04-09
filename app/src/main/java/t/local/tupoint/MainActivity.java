@@ -82,15 +82,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_admins) {
+        if (id == R.id.nav_register_admins) {
             // Handle the camera action
             Toast.makeText(getApplicationContext(),
                     "Register Admin" ,
                     Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), RegisterAdminActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_goto_admins) {
+// Handle the camera action
+            Toast.makeText(getApplicationContext(),
+                    "Admins" ,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

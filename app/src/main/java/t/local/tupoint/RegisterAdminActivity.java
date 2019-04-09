@@ -1,6 +1,5 @@
 package t.local.tupoint;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import t.local.tupoint.config.Globals;
+import t.local.tupoint.config.WebServices;
 import t.local.tupoint.interfaces.InterfaceRetrofit;
 import t.local.tupoint.models.Admin;
 
@@ -93,9 +92,9 @@ public class RegisterAdminActivity extends AppCompatActivity {
 
             // Anokis
 
-            Globals globals = new Globals();
+            WebServices webServices = new WebServices();
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(globals.SpringBoot)
+                    .baseUrl(webServices.SpringBoot)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
@@ -115,7 +114,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
                                     {
                                         Log.d("=TuPoint=>", "getUser - No data");
                                         Toast.makeText(getApplicationContext(),
-                                                "Credentials error" ,
+                                                "Server Error" ,
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                     else
