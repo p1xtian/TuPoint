@@ -15,8 +15,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import t.local.tupoint.config.WebServices;
 import t.local.tupoint.interfaces.InterfaceRetrofit;
 import t.local.tupoint.models.Admin;
+import t.local.tupoint.models.Restaurant;
 
-public class RegisterAdminActivity extends AppCompatActivity {
+public class RegisterRestaurantActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +101,36 @@ public class RegisterAdminActivity extends AppCompatActivity {
 
             InterfaceRetrofit services = retrofit.create(InterfaceRetrofit.class);
 
-            Admin adminToSave = new Admin(0,email,password,ruc,"","","1");
+            Restaurant restToSave =
+                    new Restaurant(
+                            0,
+                            email,
+                            password,
+                            "",
+                            "",
+                            ruc,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            1l );
 
-            services.SaveAdmin(adminToSave)
+            services.SaveRestaurant(restToSave)
                     .
-                            enqueue(new retrofit2.Callback<Admin>() {
+                            enqueue(new retrofit2.Callback<Restaurant>() {
 
 
                                 @Override
-                                public void onResponse(Call<Admin> call, Response<Admin> response) {
+                                public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
 
                                     if(response.body() == null)
                                     {
@@ -119,8 +141,8 @@ public class RegisterAdminActivity extends AppCompatActivity {
                                     }
                                     else
                                     {
-                                        Admin admin = response.body();
-                                        Log.d("=TuPoint=>", "Email Attempt Login: "+ admin.getEmail());
+                                        Restaurant restaurant = response.body();
+                                        Log.d("=TuPoint=>", "Email Attempt Login: "+ restaurant.getCorreo());
 
 
                                         Toast.makeText(getApplicationContext(),
@@ -137,7 +159,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onFailure(Call<Admin> call, Throwable t) {
+                                public void onFailure(Call<Restaurant> call, Throwable t) {
                                     Toast.makeText(getApplicationContext(),
                                             "Server Error" ,
 

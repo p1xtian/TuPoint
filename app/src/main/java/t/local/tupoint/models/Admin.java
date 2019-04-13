@@ -1,5 +1,6 @@
 package t.local.tupoint.models;
 
+
 import com.google.gson.annotations.SerializedName;
 
 public class Admin {

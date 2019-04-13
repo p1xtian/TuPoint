@@ -87,14 +87,14 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(),
                     "Register Admin" ,
                     Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), RegisterAdminActivity.class);
+            Intent intent = new Intent(getApplicationContext(), RegisterRestaurantActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_goto_admins) {
 // Handle the camera action
             Toast.makeText(getApplicationContext(),
                     "Admins" ,
                     Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+            Intent intent = new Intent(getApplicationContext(), RestaurantActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 

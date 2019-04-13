@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import t.local.tupoint.models.Admin;
+import t.local.tupoint.models.Restaurant;
 
 public interface InterfaceRetrofit {
 
@@ -16,6 +17,15 @@ public interface InterfaceRetrofit {
 
     @GET("admins")
     Call<List<Admin>> ListAdmins();
+
+    //List Admin
+
+    @GET("restaurantes")
+    Call<List<Restaurant>> ListRestaurants();
+    //Save Admin
+    @POST("registerRestaurant")
+    Call<Restaurant> SaveRestaurant(@Body Restaurant restaurant);
+
 
     //Login
     @GET("admins/email/{email}}")
