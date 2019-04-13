@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -35,6 +36,17 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         final EditText eT_email = findViewById(R.id.eT_email);
         final EditText eT_password = findViewById(R.id.eT_password);
         final EditText eT_ruc = findViewById(R.id.eT_ruc);
+        final EditText eT_razonsocial = findViewById(R.id.eT_razon);
+        final EditText eT_direccion = findViewById(R.id.eT_direccion);
+        final EditText eT_telefono = findViewById(R.id.eT_telefono);
+        final EditText eT_descripcion = findViewById(R.id.eT_descripcion);
+        final EditText eT_mesas = findViewById(R.id.eT_mesas);
+        final EditText eT_aforo = findViewById(R.id.eT_aforo);
+        final Switch eT_garaje = findViewById(R.id.swGaraje);
+        final Switch eT_terraza = findViewById(R.id.swTerraza);
+        final Switch eT_aireacondicionado = findViewById(R.id.swAireAcondicionado);
+        final EditText eT_googlemaps = findViewById(R.id.eT_googlemaps);
+
 
         // Resetear errores.
         eT_email.setError(null);
@@ -45,11 +57,26 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         String email = eT_email.getText().toString();
         String password = eT_password.getText().toString();
         String ruc = eT_ruc.getText().toString();
+        String razonsocial = eT_razonsocial.getText().toString();
+        String direccion = eT_direccion.getText().toString();
+        String telefono = eT_telefono.getText().toString();
+        String descripcion = eT_descripcion.getText().toString();
+        String mesas = eT_mesas.getText().toString();
+        String aforo = eT_aforo.getText().toString();
+        boolean garaje = eT_garaje.isChecked();
+        boolean terraza = eT_terraza.isChecked();
+        boolean aireacondicionado = eT_aireacondicionado.isChecked();
+        String googlemaps = eT_googlemaps.getText().toString();
 
-        Log.d("=TuPoint=>", email + " " + password + " " + ruc);
+        Log.d("=TuPoint=>", email + " " + password + " " + ruc + " " + razonsocial);
+        Log.d("=TuPoint=>", direccion + " " + telefono + " " + descripcion + " " + mesas);
+        Log.d("=TuPoint=>", aforo + " " + garaje + " " + terraza + " " + aireacondicionado);
+        Log.d("=TuPoint=>", googlemaps);
 
         boolean cancel = false;
         View focusView = null;
+
+        //Validaciones
 
         // Validar Email
         if (TextUtils.isEmpty(email)) {
@@ -66,20 +93,41 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
 
         // Validar Password
         if (!isPasswordValid(password)) {
-            eT_password.setError("6 Digitos Minimo");
+            eT_password.setError("6 digitos minimo");
            //focusView = eT_password;
             cancel = true;
         }
 
         // Validar RUC
         if (TextUtils.isEmpty(ruc)) {
-            eT_ruc.setError("Campo Necesario");
+            eT_ruc.setError("Campo necesario");
             //focusView = eT_email;
             cancel = true;
         }
+
         if (!isRucValid(ruc)) {
-            eT_ruc.setError("RUC Errado");
+            eT_ruc.setError("Minimo 11 digitos y debe empezar con 10 o 20 o 13");
             //focusView = eT_email;
+            cancel = true;
+        }
+
+        //Valir Razon Social
+
+        if(razonsocial.length() >50)
+        {
+            eT_razonsocial.setError("Maximo 50 caracteres");
+            cancel = true;
+        }
+
+        if(direccion.length() >150)
+        {
+            eT_razonsocial.setError("Maximo 150 caracteres");
+            cancel = true;
+        }
+
+        if(telefono.length() >=7)
+        {
+            eT_razonsocial.setError("Minimo 7 caracteres");
             cancel = true;
         }
 
@@ -191,7 +239,21 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
     private boolean isRucValid(String ruc) {
         //TODO: Replace this with your own logic
 
-        return ruc.length() == 11;
-    }
+        boolean valid = false;
+        if (ruc.length() == 11) {
+            if (
+                    ruc.substring(0, 2).equals("10")
+                            || ruc.substring(0, 2).equals("20")
+                            || ruc.substring(0, 2).equals("13")) {
 
+                valid = true;
+            } else {
+                valid = false;
+            }
+        } else {
+            valid = false;
+        }
+        Log.d("=TuPoint=>", "Valid :" +valid);
+        return valid;
+    }
 }

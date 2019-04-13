@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,10 +8,15 @@
     android:orientation="vertical"
     tools:context=".RegisterRestaurantActivity" >
 
-    <TextView
+    //Logo
+
+
+    <ImageView
+        android:id="@+id/iVlogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Registro" />
+        android:layout_weight="1"
+        app:srcCompat="@drawable/logo" />
 
     //Email
 
@@ -148,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
     </LinearLayout>
 
@@ -199,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
     </LinearLayout>
 
@@ -223,7 +229,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="number" />
 
     </LinearLayout>
 
@@ -275,28 +281,7 @@
 
     </LinearLayout>
 
-    //Logo
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Logo" />
-
-        <ImageView
-            android:id="@+id/iVlogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_menu_gallery" />
-
-    </LinearLayout>
 
     //Google Maps
 
@@ -318,6 +303,16 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
+        <EditText
+            android:id="@+id/eT_googlemaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:editable="false"
+            android:ems="10"
+            android:enabled="false"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
