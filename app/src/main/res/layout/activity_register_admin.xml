@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,10 +12,13 @@
 
     <ImageView
         android:id="@+id/iVlogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        app:srcCompat="@drawable/logo" />
+        android:onClick="LoadLogo"
+        app:srcCompat="@drawable/ic_imagen_no_disponible" />
+
 
     //Email
 
@@ -201,20 +203,11 @@
 
         <EditText
             android:id="@+id/eT_mesas"
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="number" />
-
-    </LinearLayout>
-
-    //Aforo
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <TextView
 
@@ -225,13 +218,15 @@
 
         <EditText
             android:id="@+id/eT_aforo"
-            android:layout_width="wrap_content"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="number" />
 
     </LinearLayout>
+
+    //Aforo
 
     //Garaje
 

@@ -1,11 +1,16 @@
 package t.local.tupoint;
 
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -14,16 +19,21 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import t.local.tupoint.config.WebServices;
+import t.local.tupoint.helpers.HelperBase64;
 import t.local.tupoint.interfaces.InterfaceRetrofit;
 import t.local.tupoint.models.Admin;
 import t.local.tupoint.models.Restaurant;
 
 public class RegisterRestaurantActivity extends AppCompatActivity {
 
+    ImageView iV_logo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_admin);
+
+         iV_logo = findViewById(R.id.iVlogo);
 
     }
 
@@ -48,6 +58,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         final EditText eT_googlemaps = findViewById(R.id.eT_googlemaps);
 
 
+
         // Resetear errores.
         eT_email.setError(null);
         eT_password.setError(null);
@@ -67,11 +78,22 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         boolean terraza = eT_terraza.isChecked();
         boolean aireacondicionado = eT_aireacondicionado.isChecked();
         String googlemaps = eT_googlemaps.getText().toString();
+        String logo = "";
+
+
+        //Logo
+
+        //Photo
+        HelperBase64 helperBase64 = new HelperBase64();
+
+
+            logo = helperBase64.Encode(((BitmapDrawable)iV_logo.getDrawable()).getBitmap());
 
         Log.d("=TuPoint=>", email + " " + password + " " + ruc + " " + razonsocial);
         Log.d("=TuPoint=>", direccion + " " + telefono + " " + descripcion + " " + mesas);
         Log.d("=TuPoint=>", aforo + " " + garaje + " " + terraza + " " + aireacondicionado);
         Log.d("=TuPoint=>", googlemaps);
+        Log.d("=TuPoint=>", logo);
 
         boolean cancel = false;
         View focusView = null;
@@ -112,10 +134,21 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         }
 
         //Valir Razon Social
+        if(TextUtils.isEmpty(razonsocial))
+        {
+            eT_razonsocial.setError("Campo necesario");
+            cancel = true;
+        }
 
         if(razonsocial.length() >50)
         {
             eT_razonsocial.setError("Maximo 50 caracteres");
+            cancel = true;
+        }
+//Validar Direccion
+        if(TextUtils.isEmpty(direccion))
+        {
+            eT_direccion.setError("Campo necesario");
             cancel = true;
         }
 
@@ -124,10 +157,10 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
             eT_razonsocial.setError("Maximo 150 caracteres");
             cancel = true;
         }
-
+//Validar Telefono
         if(telefono.length() >=7)
         {
-            eT_razonsocial.setError("Minimo 7 caracteres");
+            eT_telefono.setError("Minimo 7 caracteres");
             cancel = true;
         }
 
@@ -157,19 +190,19 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
                             "",
                             "",
                             ruc,
+                            razonsocial,
+                            "1",
+                            direccion,
+                            telefono,
                             "",
                             "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
+                            logo,
+                            descripcion,
+                            Boolean.toString(garaje),
+                            Boolean.toString(terraza),
+                            mesas,
+                            aforo,
+                            Boolean.toString(aireacondicionado),
                             1l );
 
             services.SaveRestaurant(restToSave)
@@ -255,5 +288,31 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         }
         Log.d("=TuPoint=>", "Valid :" +valid);
         return valid;
+    }
+
+    public void LoadLogo(View view) {
+
+       Intent intent = new Intent(Intent.ACTION_PICK,
+               MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+       intent.setType("image/");
+
+       startActivityForResult(
+               intent.createChooser(intent,
+                       "Seleccione"),10);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK)
+        {
+            iV_logo.setImageURI(data.getData());
+        }
+
+
+
     }
 }
