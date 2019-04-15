@@ -315,4 +315,9 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
 
 
     }
+
+    public void LoadMaps(View view) {
+        Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+        startActivityForResult(intent, 1);
+    }
 }
