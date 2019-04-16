@@ -2,12 +2,15 @@ package t.local.tupoint;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -39,8 +42,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //-12.096230, -77.026294
+        double lat = -12.096230d;
+        double lng = -77.026294;
+        LatLng sanisidro = new LatLng(lat, lng);
+        mMap.addMarker(new MarkerOptions().position(sanisidro).title("San Isidro").draggable(true));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sanisidro,16));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                double latitude,longitude;
+
+                latitude = marker.getPosition().latitude;
+                longitude = marker.getPosition().longitude;
+
+                LatLng posicion = new LatLng(latitude, longitude);
+
+                Toast.makeText(getApplicationContext(), "position actual : " + latitude + " : " + longitude , Toast.LENGTH_LONG).show();
+
+                return false;
+            }
+        });
+
+
     }
+
+
 }

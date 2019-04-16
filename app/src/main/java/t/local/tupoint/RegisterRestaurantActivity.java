@@ -73,7 +73,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         String telefono = eT_telefono.getText().toString();
         String descripcion = eT_descripcion.getText().toString();
         String mesas = eT_mesas.getText().toString();
-        String aforo = eT_aforo.getText().toString();
+        final String aforo = eT_aforo.getText().toString();
         boolean garaje = eT_garaje.isChecked();
         boolean terraza = eT_terraza.isChecked();
         boolean aireacondicionado = eT_aireacondicionado.isChecked();
@@ -158,7 +158,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
             cancel = true;
         }
 //Validar Telefono
-        if(telefono.length() >=7)
+        if(telefono.length() <=7)
         {
             eT_telefono.setError("Minimo 7 caracteres");
             cancel = true;
@@ -230,9 +230,20 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
                                                 "Grabado" ,
                                                 Toast.LENGTH_SHORT).show();
 
+                                        //Limpiar
                                         eT_email.setText("");
                                         eT_password.setText("");
                                         eT_ruc.setText("");
+                                        eT_razonsocial.setText("");
+                                        eT_direccion.setText("");
+                                        eT_telefono.setText("");
+                                        eT_descripcion.setText("");
+                                        eT_mesas.setText("");
+                                        eT_aforo.setText("");
+                                        eT_googlemaps.setText("");
+                                        eT_garaje.setChecked(false);
+                                        eT_terraza.setChecked(false);
+                                        eT_aireacondicionado.setChecked(false);
 
                                     }
 

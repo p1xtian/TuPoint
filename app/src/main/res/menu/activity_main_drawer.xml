@@ -7,19 +7,15 @@
         <item
             android:id="@+id/nav_register_admins"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Register Admin" />
+            android:title="Maestro De PLatos" />
         <item
             android:id="@+id/nav_goto_admins"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Admins" />
+            android:title="Reservas Del Dia" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Mis Calificaciones" />
     </group>
 
     <item android:title="Communicate">
@@ -27,11 +23,7 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Cerrar Sesion" />
         </menu>
     </item>
 
