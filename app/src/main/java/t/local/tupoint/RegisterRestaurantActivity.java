@@ -27,6 +27,7 @@ import t.local.tupoint.models.Restaurant;
 public class RegisterRestaurantActivity extends AppCompatActivity {
 
     ImageView iV_logo;
+    EditText eT_googlemaps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_admin);
 
          iV_logo = findViewById(R.id.iVlogo);
+         eT_googlemaps = findViewById(R.id.eT_googlemaps);
 
     }
 
@@ -55,7 +57,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         final Switch eT_garaje = findViewById(R.id.swGaraje);
         final Switch eT_terraza = findViewById(R.id.swTerraza);
         final Switch eT_aireacondicionado = findViewById(R.id.swAireAcondicionado);
-        final EditText eT_googlemaps = findViewById(R.id.eT_googlemaps);
+
 
 
 
@@ -314,21 +316,40 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
 
     }
 
+
+    //Retorno de Galeria
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode==RESULT_OK)
-        {
-            iV_logo.setImageURI(data.getData());
+        //Logo
+        if (requestCode == 10) {
+            if (resultCode == RESULT_OK) {
+                iV_logo.setImageURI(data.getData());
+            }
         }
 
+        //Mapa
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                String returnedResult = data.getData().toString();
+
+                eT_googlemaps.setText(returnedResult);
+                Toast.makeText(getApplicationContext(),
+                        "Retorno de Maps: " + returnedResult ,
+                        Toast.LENGTH_LONG).show();
+            }
+        }
 
 
     }
 
+    //Maps
     public void LoadMaps(View view) {
         Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
         startActivityForResult(intent, 1);
     }
+
+
+
 }

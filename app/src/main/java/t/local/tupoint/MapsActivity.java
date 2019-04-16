@@ -1,7 +1,14 @@
 package t.local.tupoint;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,6 +19,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -40,33 +51,113 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Marker activeMarker = null;
 
         // Add a marker in Sydney and move the camera
         //-12.096230, -77.026294
-        double lat = -12.096230d;
-        double lng = -77.026294;
-        LatLng sanisidro = new LatLng(lat, lng);
-        mMap.addMarker(new MarkerOptions().position(sanisidro).title("San Isidro").draggable(true));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sanisidro,16));
+        final double lat = -12.096230d;
+        final double lng = -77.026294;
+        LatLng position = new LatLng(lat, lng);
+        String title = "Ubicar Restaurante";
+        mMap.addMarker(new MarkerOptions().position(position).title("¿Tu Restaurante?").draggable(true));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16));
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                double latitude,longitude;
+            public void onMarkerDragStart(Marker marker) {
 
-                latitude = marker.getPosition().latitude;
-                longitude = marker.getPosition().longitude;
+                Toast.makeText(getApplicationContext(),
+                        "¿Donde Esta Tu Restaurant?",
+                        Toast.LENGTH_LONG).show();
 
-                LatLng posicion = new LatLng(latitude, longitude);
+            }
 
-                Toast.makeText(getApplicationContext(), "position actual : " + latitude + " : " + longitude , Toast.LENGTH_LONG).show();
+            @Override
+            public void onMarkerDrag(Marker marker) {
 
-                return false;
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                /*
+                Toast.makeText(getApplicationContext(),
+                        "Geo Fijado--> Lat: " + marker.getPosition().latitude + " Lng " +
+                                marker.getPosition().longitude,
+                        Toast.LENGTH_SHORT).show();
+
+*/
+                String direccion = obtenerDireccion(marker.getPosition().latitude,
+                        marker.getPosition().longitude);
+                Toast.makeText(getApplicationContext(),
+                        "Direccion:" + direccion,
+                        Toast.LENGTH_SHORT).show();
+                confirmarUbicacion(marker,direccion);
+
             }
         });
+            }
+
+    public String obtenerDireccion(double lat, double lng)
+    {
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        String city = "";
+        String state;
+        String zip;
+        String country;
+        String direccion = "";
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            city = addresses.get(0).getLocality();
+            state = addresses.get(0).getAdminArea();
+            zip = addresses.get(0).getPostalCode();
+            country = addresses.get(0).getCountryName();
+            direccion = addresses.get(0).getAddressLine(0);
+
+            return direccion;
+
+        } catch (IOException e) {
+            Log.e("=TuPoint=>", e.getMessage());
+            return "Error al obtener Direccion";
+        }
 
 
     }
 
+    private void confirmarUbicacion(final Marker marker, String direccion) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Es " + direccion + " la direccion corretcta");
+        alertDialogBuilder.setPositiveButton("Si",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
 
+                        Intent data = new Intent();
+                        String text =
+                                marker.getPosition().latitude +"|"+
+                                        marker.getPosition().longitude
+                                ;
+//---set the data to pass back---
+                        data.setData(Uri.parse(text));
+                        setResult(RESULT_OK, data);
+//---close the activity---
+                        finish();
+
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }
