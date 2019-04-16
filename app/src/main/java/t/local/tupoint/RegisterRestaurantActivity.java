@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -81,6 +82,22 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         boolean aireacondicionado = eT_aireacondicionado.isChecked();
         String googlemaps = eT_googlemaps.getText().toString();
         String logo = "";
+        String latitud = "";
+        String longitud = "";
+
+
+        Log.d("=TuPoint=>","Maps:" + googlemaps);
+        String[] valuesmaps = googlemaps.split(":");
+
+        if (!TextUtils.isEmpty(googlemaps))
+        {
+             latitud = valuesmaps[0];
+             longitud = valuesmaps[1];
+            Log.d("=TuPoint=>","Latitud:" + latitud);
+            Log.d("=TuPoint=>","Longitud:" + longitud);
+        }
+
+
 
 
         //Logo
@@ -196,8 +213,8 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
                             "1",
                             direccion,
                             telefono,
-                            "",
-                            "",
+                            latitud,
+                            longitud,
                             logo,
                             descripcion,
                             Boolean.toString(garaje),

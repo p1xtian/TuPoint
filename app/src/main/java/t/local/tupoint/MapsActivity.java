@@ -138,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         Intent data = new Intent();
                         String text =
-                                marker.getPosition().latitude +"|"+
+                                marker.getPosition().latitude +":"+
                                         marker.getPosition().longitude
                                 ;
 //---set the data to pass back---
