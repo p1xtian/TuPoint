@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -135,6 +136,8 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
         // Validar Password
         if (!isPasswordValid(password)) {
             eT_password.setError("6 digitos minimo");
+            //eT_password.setError(Html.fromHtml("<font color='blue'>Error Message!</font>"));
+
            //focusView = eT_password;
             cancel = true;
         }
@@ -334,7 +337,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
     }
 
 
-    //Retorno de Galeria
+    //Retorno de Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -352,9 +355,10 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
                 String returnedResult = data.getData().toString();
 
                 eT_googlemaps.setText(returnedResult);
+                /*
                 Toast.makeText(getApplicationContext(),
                         "Retorno de Maps: " + returnedResult ,
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();*/
             }
         }
 

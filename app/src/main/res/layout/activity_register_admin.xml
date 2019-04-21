@@ -1,338 +1,494 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2B2B2B"
     android:orientation="vertical"
-    tools:context=".RegisterRestaurantActivity" >
 
-    //Logo
-
-
-    <ImageView
-        android:id="@+id/iVlogo"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="LoadLogo"
-        app:srcCompat="@drawable/ic_imagen_no_disponible" />
-
-
-    //Email
+    tools:context=".RegisterRestaurantActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Email" />
-
-        <EditText
-            android:id="@+id/eT_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-    </LinearLayout>
-
-    //Password
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Password" />
-
-        <EditText
-            android:id="@+id/eT_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPassword" />
-    </LinearLayout>
-
-    //Ruc
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="RUC" />
-
-        <EditText
-            android:id="@+id/eT_ruc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-    </LinearLayout>
-
-    //Razon Social
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Razon Social" />
-
-        <EditText
-            android:id="@+id/eT_razon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-    </LinearLayout>
-
-    //Direccion
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Direccion" />
-
-        <EditText
-            android:id="@+id/eT_direccion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-    </LinearLayout>
-
-
-    //Telefono
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Telefono" />
-
-        <EditText
-            android:id="@+id/eT_telefono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number" />
-
-    </LinearLayout>
-
-    //Descripcion
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Descripcion" />
-
-        <EditText
-            android:id="@+id/eT_descripcion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
-
-    </LinearLayout>
-
-
-
-
-    //Mesas
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Mesas" />
-
-        <EditText
-            android:id="@+id/eT_mesas"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Aforo" />
-
-        <EditText
-            android:id="@+id/eT_aforo"
-            android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="number" />
-
-    </LinearLayout>
-
-    //Aforo
-
-    //Garaje
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/swGaraje"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Garaje" />
-
-    </LinearLayout>
-
-    //Terraza
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/swTerraza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Terraza" />
-
-    </LinearLayout>
-
-    //Aire Acondicionado
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/swAireAcondicionado"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Aire Acondicionado" />
-
-    </LinearLayout>
-
-
-
-    //Google Maps
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Google Maps" />
-
+        android:layout_width="371dp"
+        android:layout_height="565dp"
+        android:layout_margin="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#7AA8A4A4"
+        android:orientation="vertical">
+
+
+        //Logo
         <ImageView
-            android:id="@+id/iVmap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iVlogo"
+            android:layout_width="340dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_menu_mylocation"
-            android:onClick="LoadMaps"/>
+            app:srcCompat="@drawable/logo"
+            android:onClick="LoadLogo"/>
 
-        <EditText
-            android:id="@+id/eT_googlemaps"
+        //Email
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Email:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_email"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        //Password
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Password:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_password"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        //Ruc
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="RUC:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_ruc"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="number"
+                />
+
+        </LinearLayout>
+
+        //Razon Social
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Razón Social:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_razon"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        //Direccion
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Dirección:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_direccion"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        //Telefono
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Teléfono:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_telefono"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        //Descripcion
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Descripción:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_descripcion"
+                android:layout_width="249dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F4F6F6"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+        //Mesas
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Mesas:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_mesas"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        //Aforo
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Aforo:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_aforo"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        //Garaje
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/swGaraje"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Garaje:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold"
+                android:thumbTint="#F7F9F9"
+                android:trackTint="#212F3C" />
+
+        </LinearLayout>
+
+        //Terraza
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/swTerraza"
+                android:layout_width="137dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Terraza:"
+                android:textColor="#F7F9F9"
+                android:thumbTint="#F7F9F9"
+                android:trackTint="#212F3C"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        //Aire Acondicionado
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/swAireAcondicionado"
+                android:layout_width="188dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Aire Acondicionado:"
+                android:textColor="#F7F9F9"
+                android:thumbTint="#F7F9F9"
+                android:trackTint="#212F3C"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        //Google Maps
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Google Maps"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iVmap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                app:srcCompat="@android:drawable/ic_menu_mylocation"
+                android:onClick="LoadMaps"/>
+
+            <EditText
+                android:id="@+id/eT_googlemaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:editable="false"
+                android:ems="10"
+                android:enabled="false"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        //Botones
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:editable="false"
-            android:ems="10"
-            android:enabled="false"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:onClick="Save"
+                android:text="Grabar"
+                android:textSize="14dp"
+                android:background="#17202A"
+                android:textColor="#FDFEFE"
+                android:textStyle="bold"
+                android:fontFamily="@font/venturabold"/>
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:onClick="Exit"
+                android:text="Salir"
+                android:textSize="14dp"
+                android:background="#17202A"
+                android:textColor="#FDFEFE"
+                android:textStyle="bold"
+                android:fontFamily="@font/venturabold"/>
+        </LinearLayout>
 
     </LinearLayout>
 
-    //Botones
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="Save"
-            android:text="Grabar" />
-
-        <Button
-            android:id="@+id/btn_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="Exit"
-            android:text="Salir" />
-    </LinearLayout>
 </LinearLayout>

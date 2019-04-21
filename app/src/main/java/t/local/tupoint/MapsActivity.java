@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,20 +20,83 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+
+//Anokis
+        /**
+         * Initialize Places. For simplicity, the API key is hard-coded. In a production
+         * environment we recommend using a secure mechanism to manage API keys.
+         */
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), "AIzaSyC0hnzBdqF379K48bORs2TX701fB9HtezI");
+        }
+
+// Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+                getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+
+                if(place.getLatLng() != null)
+                {
+                    double lat = place.getLatLng().latitude;
+                    double lng = place.getLatLng().longitude;
+
+                    Log.d("=TuPoint", "Place: " + place.getName() + ", " + place.getId());
+                    Log.d("=TuPoint", "Lat: " + lat + ", Lng: " + lng);
+
+                    LatLng position = new LatLng(lat, lng);
+                    String title = place.getName();
+                    mMap.clear();
+                    mMap.addMarker(new MarkerOptions().position(position).title(title).draggable(true));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16));
+                    Toast.makeText(getApplicationContext(),
+                            title,
+                            Toast.LENGTH_LONG).show();
+
+                }
+                else
+                {
+                    Log.d("=TuPoint", "Place: No LatLng ");
+
+                }
+
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.d("=TuPoint", "An error occurred: " + status);
+            }
+        });
+
+
+
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -51,9 +115,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Marker activeMarker = null;
 
-        // Add a marker in Sydney and move the camera
+        //
+        //        // Add a marker in Sydney and move the camera
         //-12.096230, -77.026294
         final double lat = -12.096230d;
         final double lng = -77.026294;
@@ -88,16 +152,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Toast.LENGTH_SHORT).show();
 
 */
+
+
+            }
+        });
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
                 String direccion = obtenerDireccion(marker.getPosition().latitude,
                         marker.getPosition().longitude);
                 Toast.makeText(getApplicationContext(),
                         "Direccion:" + direccion,
                         Toast.LENGTH_SHORT).show();
-                confirmarUbicacion(marker,direccion);
 
+                if(!direccion.contains("San Isidro"))
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Direccion no permitida, debe pertenecer a San Isidro",
+                            Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    confirmarUbicacion(marker,direccion);
+                }
+
+                return true;
             }
         });
+
+
+
             }
+
+
+
+
 
     public String obtenerDireccion(double lat, double lng)
     {
@@ -130,7 +220,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void confirmarUbicacion(final Marker marker, String direccion) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Es " + direccion + " la direccion corretcta");
+        alertDialogBuilder.setMessage("Es " + direccion + " la direccion correcta");
         alertDialogBuilder.setPositiveButton("Si",
                 new DialogInterface.OnClickListener() {
                     @Override

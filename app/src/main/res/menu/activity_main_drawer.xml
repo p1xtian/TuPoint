@@ -7,11 +7,11 @@
         <item
             android:id="@+id/nav_register_admins"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Maestro De PLatos" />
+            android:title="Registrar Restaurantes" />
         <item
             android:id="@+id/nav_goto_admins"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Reservas Del Dia" />
+            android:title="Listar restaurantes" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
