@@ -1,23 +1,37 @@
 package t.local.tupoint;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class LandingUserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +70,39 @@ public class LandingUserActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.landing_user, menu);
-        return true;
+
+        Log.d("==TuPoint==>",LoadPreferences("getDisplayName"));
+        Log.d("==TuPoint==>",LoadPreferences("getEmail"));
+        Log.d("==TuPoint==>",LoadPreferences("getPhotoUrl"));
+
+        //
+        TextView userLongName = (TextView) findViewById(R.id.userName);
+        userLongName.setText(LoadPreferences("getDisplayName"));
+
+        TextView email = (TextView) findViewById(R.id.email);
+        email.setText(LoadPreferences("getEmail"));
+
+
+
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            URL myFileUrl = new URL(LoadPreferences("getPhotoUrl"));
+            HttpURLConnection conn =
+                    (HttpURLConnection) myFileUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            ImageView userPhoto = (ImageView) findViewById(R.id.imageView);
+            userPhoto.setImageBitmap(BitmapFactory.decodeStream(is));
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+              return true;
     }
 
     @Override
@@ -80,28 +126,36 @@ public class LandingUserActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_reservas) {
+            Toast.makeText(getApplicationContext(),
+                    "Reservas" ,
+                    Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_cerca) {
             Toast.makeText(getApplicationContext(),
                     "Cerca De Mi" ,
                     Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), NeighborhoodActivity.class);
             startActivity(intent);
-
         }
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Methods
+    public String LoadPreferences(String key)
+    {
+        SharedPreferences preferences =
+                getSharedPreferences("credentials",
+                        this.MODE_PRIVATE);
+        return preferences.getString(key,"No Data");
+    }
+
+
+    public void LogOut(MenuItem item) {
+        mGoogleSignInClient.signOut();
+        Intent intent = new Intent(getApplicationContext(), LandingMainActivity.class);
+        startActivity(intent);
+
     }
 }

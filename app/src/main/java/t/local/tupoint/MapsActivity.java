@@ -8,6 +8,8 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,13 +29,22 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import t.local.tupoint.adapters.RecyclerAdapterRestaurants;
+import t.local.tupoint.config.WebServices;
+import t.local.tupoint.interfaces.InterfaceRetrofit;
+import t.local.tupoint.models.Restaurant;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +96,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
 
+
+
+
+
+
             }
 
             @Override
@@ -125,6 +141,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String title = "Ubicar Restaurante";
         mMap.addMarker(new MarkerOptions().position(position).title("¿Tu Restaurante?").draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16));
+
+
 
 
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {

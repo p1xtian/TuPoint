@@ -1,7 +1,11 @@
 package t.local.tupoint;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -15,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -24,6 +29,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.crypto.NullCipher;
 
@@ -72,7 +83,38 @@ public class LandingMainActivity extends AppCompatActivity
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        mGoogleSignInClient.signOut();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        //mGoogleSignInClient.signOut();
+
+
+
+        try {
+            if(isSign())
+            {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                URL myFileUrl = new URL(account.getPhotoUrl().toString());
+                HttpURLConnection conn =
+                        (HttpURLConnection) myFileUrl.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+                InputStream is = conn.getInputStream();
+                ImageView userPhoto = (ImageView) findViewById(R.id.userPhoto);
+                userPhoto.setImageBitmap(BitmapFactory.decodeStream(is));
+            }
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
@@ -148,12 +190,28 @@ public class LandingMainActivity extends AppCompatActivity
         if(!isSign())
         {
             signIn();
+
         }
         else
         {
             Log.d("=TuPoint=>","Ya inicio Sesion");
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+            Log.d("=TuPoint=>",account.getDisplayName() + account.getEmail() +account.getPhotoUrl());
 
+            //Save in SharedPreferences
+            SharedPreferences credentialsSP =
+                    getSharedPreferences("credentials",
+                            Context.MODE_PRIVATE);
+            SharedPreferences.Editor credentialsEditor = credentialsSP.edit();
+            credentialsEditor.putString("getDisplayName",account.getDisplayName());
+            credentialsEditor.putString("getEmail",account.getEmail());
+            credentialsEditor.putString("getPhotoUrl",account.getPhotoUrl().toString());
+            credentialsEditor.commit();
+            Toast.makeText(getApplicationContext(),
+                    "Login Sucefull" ,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), LandingUserActivity.class);
+            startActivity(intent);
         }
 
     }
@@ -181,12 +239,31 @@ public class LandingMainActivity extends AppCompatActivity
 
             Log.d("=TuPoint=>",account.getDisplayName() + account.getEmail() +account.getPhotoUrl());
 
+
             // Signed in successfully, show authenticated UI.
+            //Save in SharedPreferences
+            SharedPreferences credentialsSP =
+                    getSharedPreferences("credentials",
+                            Context.MODE_PRIVATE);
+            SharedPreferences.Editor credentialsEditor = credentialsSP.edit();
+            credentialsEditor.putString("getDisplayName",account.getDisplayName());
+            credentialsEditor.putString("getEmail",account.getEmail());
+            credentialsEditor.putString("getPhotoUrl",account.getPhotoUrl().toString());
+            credentialsEditor.commit();
+            Toast.makeText(getApplicationContext(),
+                    "Login Sucefull" ,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), LandingUserActivity.class);
+            startActivity(intent);
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.d("=TuPoint=>","signInResult:failed code=" + e.getStatusCode());
+            Toast.makeText(getApplicationContext(),
+                    "Error en la sesion" ,
+                    Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), RestaurantActivity.class);
 
         }
     }
@@ -206,4 +283,23 @@ public class LandingMainActivity extends AppCompatActivity
 
     }
 
+    public void SignOut(View view) {
+
+        if(isSign())
+        {
+            mGoogleSignInClient.signOut();
+            finish();
+            startActivity(getIntent());
+            Toast.makeText(getApplicationContext(),
+                    "Sesion Cerrada" ,
+                    Toast.LENGTH_SHORT).show();
+
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),
+                    "No hay sesion Activa" ,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }

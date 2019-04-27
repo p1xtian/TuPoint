@@ -3,12 +3,15 @@ package t.local.tupoint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.RestrictionEntry;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -16,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -23,6 +27,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.maps.android.ui.IconGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +37,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import t.local.tupoint.config.WebServices;
+import t.local.tupoint.interfaces.InterfaceRetrofit;
+import t.local.tupoint.models.Restaurant;
 
 public class NeighborhoodActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -74,7 +85,8 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
 
                     LatLng position = new LatLng(lat, lng);
                     String title = place.getName();
-                    mMap.clear();
+                    //mMap.clear();
+
                     mMap.addMarker(new MarkerOptions().position(position).title(title).draggable(true));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16));
                     Toast.makeText(getApplicationContext(),
@@ -103,6 +115,10 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+
     }
 
 
@@ -117,37 +133,91 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
-        ArrayList<LatLng> restaurants = new ArrayList<LatLng>();
-        
-        restaurants.add(new LatLng(12.096230d,77.026294));
-        //restaurants.add(new LatLng(14.096230d,77.026294));
-       //restaurants.add(new LatLng(15.096230d,77.026294));
+
+        // Restaurants
+
+        WebServices webServices = new WebServices();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(webServices.SpringBoot)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        InterfaceRetrofit services = retrofit.create(InterfaceRetrofit.class);
+
+        services.ListRestaurants().enqueue(new retrofit2.Callback<List<Restaurant>>() {
+            @Override
+            public void onResponse(retrofit2.Call<List<Restaurant>> call, retrofit2.Response<List<Restaurant>> response) {
+
+
+
+                if(response.body() == null)
+                {
+                    Log.d("=TuPoint=>", "getUser - No data");
+                }
+                else
+                {
+                    List<Restaurant> objects = response.body();
+
+                    Log.d("=TuPoint=>", "Restaurantes : " + objects.size());
+
+                    for (int i = 0; i < objects.size() ; i++) {
+
+
+
+
+                        TextView text = new TextView(getApplicationContext());
+                        text.setText(objects.get(i).razonsocial);
+                        IconGenerator generator = new IconGenerator(getApplicationContext());
+                        //generator.setBackground(getDrawable(R.drawable.icon_rest));
+                        generator.setStyle(IconGenerator.STYLE_ORANGE);
+                        generator.setContentView(text);
+                        Bitmap icon = generator.makeIcon();
+
+                       try{
+                           LatLng restPosition = new LatLng(
+                                   Double.parseDouble(objects.get(i).getLatitud()),
+                                   Double.parseDouble(objects.get(i).getLongitud()));
+
+                           Marker marker = mMap.addMarker(new MarkerOptions()
+                                   .position(restPosition)
+                                   .icon(BitmapDescriptorFactory.fromBitmap(icon)));
+                       }
+                       catch (Exception e)
+                       {
+
+                       }
+
+
+
+                    }
+
+
+
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<List<Restaurant>> call, Throwable t) {
+
+                Log.d("=TuPoint=>", t.toString());
+
+
+            }
+        });
+
 
         final double lat = -12.096230d;
         final double lng = -77.026294;
         LatLng position = new LatLng(lat, lng);
-        //mMap.addMarker(new MarkerOptions().position(position).title("¿Tu Restaurante?").draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16));
-
-        if(restaurants.size() == 0){
-            Log.d("=TuPoint=>","Rest Size :"+ restaurants.size());
-
-        }
-
-       for(LatLng rest :  restaurants)
-        {
-            Log.d("TuPoint",rest.toString());
-
-
-            mMap.addMarker(new MarkerOptions().position(rest).draggable(true));
-
-        };
-
-
-
-
-
+/*
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
@@ -172,11 +242,12 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
                                 marker.getPosition().longitude,
                         Toast.LENGTH_SHORT).show();
 
-*/
+
 
 
             }
         });
+
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -202,7 +273,7 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
             }
         });
 
-
+*/
 
             }
 
