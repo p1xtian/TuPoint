@@ -213,7 +213,7 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
                             "",
                             ruc,
                             razonsocial,
-                            "1",
+                            "true",
                             direccion,
                             telefono,
                             latitud,

@@ -18,20 +18,23 @@ public interface InterfaceRetrofit {
     @GET("admins")
     Call<List<Admin>> ListAdmins();
 
-    //List Admin
-
+    //Listar Restaurantes
     @GET("restaurantes")
     Call<List<Restaurant>> ListRestaurants();
-    //Save Admin
+
+    //Grabar Resturante
     @POST("registerRestaurant")
     Call<Restaurant> SaveRestaurant(@Body Restaurant restaurant);
 
+    //Iniciar Sesion Restaurante
+    @GET("restaurantes/{email}/{password}")
+    Call<Restaurant> Login(@Path("email") String email, @Path("password") String password);
 
     //Login
     @GET("admins/email/{email}}")
     Call<Admin> FindByEmail(@Path("email") String email);
 
-    //Login
+    //FindByRUC
     @GET("admins/ruc/{ruc}}")
     Call<Admin> FindByRUC(@Path("ruc") String ruc);
 
