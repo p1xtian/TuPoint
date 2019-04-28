@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2B2B2B"
+    android:orientation="vertical"
+
+    tools:context=".RegisterReserveActivity">
+
+    <LinearLayout
+        android:layout_width="371dp"
+        android:layout_height="565dp"
+        android:layout_margin="25dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#7AA8A4A4"
+        android:orientation="vertical">
+
+
+        //Logo
+        <ImageView
+            android:id="@+id/iVlogo"
+            android:layout_width="340dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/logo"
+            android:onClick="LoadLogo"/>
+
+        //Email
+
+        //Password
+
+        //Ruc
+
+        //Razon Social
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Local: "
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/eT_razon"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="textPersonName" />
+
+        </LinearLayout>
+
+        //Direccion
+
+        //Telefono
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Fecha:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_date"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F4F6F6"
+                android:editable="false"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="datetime"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp" />
+
+"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Hora:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_time"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F4F6F6"
+                android:editable="false
+"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="datetime"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+        //Descripcion
+
+        //Mesas
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Mesas:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_mesas"
+                android:layout_width="244dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:backgroundTint="#F4F6F6"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        //Aforo
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="106dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/riffic"
+                android:text="Comensales:"
+                android:textColor="#F7F9F9"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/eT_aforo"
+                android:layout_width="87dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="0.5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#F4F6F6"
+                android:ems="10"
+                android:inputType="number"
+                android:textColor="#F4F6F6"
+                android:textSize="15dp" />
+
+        </LinearLayout>
+
+        //Garaje
+
+        //Terraza
+
+        //Aire Acondicionado
+
+        //Google Maps
+
+        //Botones
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="37dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:onClick="Save"
+                android:text="Grabar"
+                android:textSize="14dp"
+                android:background="#17202A"
+                android:textColor="#FDFEFE"
+                android:textStyle="bold"
+                android:fontFamily="@font/venturabold"/>
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:onClick="Exit"
+                android:text="Salir"
+                android:textSize="14dp"
+                android:background="#17202A"
+                android:textColor="#FDFEFE"
+                android:textStyle="bold"
+                android:fontFamily="@font/venturabold"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

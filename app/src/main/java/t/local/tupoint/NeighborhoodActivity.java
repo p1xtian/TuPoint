@@ -9,8 +9,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,12 +44,14 @@ import java.util.Locale;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import t.local.tupoint.config.WebServices;
+import t.local.tupoint.helpers.HelperBase64;
 import t.local.tupoint.interfaces.InterfaceRetrofit;
 import t.local.tupoint.models.Restaurant;
 
 public class NeighborhoodActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private List<Restaurant> restaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +121,7 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
-
+// Setting a custom info window adapter for the google map
 
     }
 
@@ -160,6 +164,7 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
                 else
                 {
                     List<Restaurant> objects = response.body();
+                    restaurants = objects;
 
                     Log.d("=TuPoint=>", "Restaurantes : " + objects.size());
 
@@ -194,8 +199,74 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
 
                     }
 
+                    mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                        // Use default InfoWindow frame
+                        @Override
+                        public View getInfoWindow(Marker arg0) {
+                            return null;
+                        }
+
+                        // Defines the contents of the InfoWindow
+                        @Override
+                        public View getInfoContents(Marker arg0) {
+
+// Getting view from the layout file info_window_layout
+                            View v = getLayoutInflater().inflate(R.layout.info_windows, null);
+
+// Getting the position from the marker
+                            LatLng latLng = arg0.getPosition();
+
+                            Restaurant restaurant = FoundRest(arg0.getPosition().latitude,arg0.getPosition().longitude);
+
+// Getting reference to the TextView to set latitude
+                            TextView tvLat = (TextView) v.findViewById(R.id.iWEmpresa);
+
+// Getting reference to the TextView to set longitude
+                            TextView tvLng = (TextView) v.findViewById(R.id.iWDireccion);
+
+                            ImageView ivEmpresa = (ImageView) v.findViewById(R.id.iWLogo);
+
+// Setting the latitude
+                            tvLat.setText(restaurant.getRazonsocial());
+
+// Setting the longitude
+                            tvLng.setText(restaurant.getDireccion());
 
 
+                            HelperBase64 helperBase64 = new HelperBase64();
+                            ivEmpresa.setImageBitmap(helperBase64.Decode(restaurant.getLogo()));
+
+// Returning the view containing InfoWindow contents
+                            return v;
+
+                        }
+
+                    });
+
+                    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        public void onInfoWindowClick(final Marker marker) {
+                            String[] items={"Reservar","Salir"};
+                            AlertDialog.Builder itemDilog = new AlertDialog.Builder(NeighborhoodActivity.this);
+                            itemDilog.setTitle("");
+                            itemDilog.setCancelable(false);
+                            itemDilog.setItems(items, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch(which){
+                                        case 0:{
+                                            Reservar(marker);
+                                        }break;
+                                        case 1:{
+
+                                        }break;
+                                    }
+
+                                }
+                            });
+                            itemDilog.show();
+
+                        }
+                    });
 
 
 
@@ -217,41 +288,12 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
         final double lng = -77.026294;
         LatLng position = new LatLng(lat, lng);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,16));
-/*
-        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
-
-                Toast.makeText(getApplicationContext(),
-                        "¿Donde Esta Tu Restaurant?",
-                        Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onMarkerDrag(Marker marker) {
-
-
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                /*
-                Toast.makeText(getApplicationContext(),
-                        "Geo Fijado--> Lat: " + marker.getPosition().latitude + " Lng " +
-                                marker.getPosition().longitude,
-                        Toast.LENGTH_SHORT).show();
-
-
-
-
-            }
-        });
-
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
+                /*
                 String direccion = obtenerDireccion(marker.getPosition().latitude,
                         marker.getPosition().longitude);
                 Toast.makeText(getApplicationContext(),
@@ -269,11 +311,16 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
                     confirmarUbicacion(marker,direccion);
                 }
 
+
+                */
+                marker.showInfoWindow();
                 return true;
             }
+
+
         });
 
-*/
+
 
             }
 
@@ -341,5 +388,38 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private Restaurant FoundRest(double lat, double lng) {
+
+
+        for (int i = 0; i < restaurants.size(); i++) {
+
+            if (
+                    restaurants.get(i).getLatitud().equals(Double.toString(lat)) &&
+                            restaurants.get(i).getLongitud().equals(Double.toString(lng))) {
+                return restaurants.get(i);
+
+
+            }
+        }
+        return null;
+    }
+
+    public void Reservar(Marker marker) {
+
+        Restaurant restaurant = FoundRest(
+                marker.getPosition().latitude,
+                marker.getPosition().longitude);
+
+        Toast.makeText(getApplicationContext(),
+                "Reservar",
+                Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(getBaseContext(), RegisterReserveActivity.class);
+        intent.putExtra("Local", restaurant.getRazonsocial());
+        startActivity(intent);
+
+
     }
 }
