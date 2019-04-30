@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import t.local.tupoint.models.Admin;
+import t.local.tupoint.models.Reserve;
 import t.local.tupoint.models.Restaurant;
 
 public interface InterfaceRetrofit {
@@ -41,5 +42,17 @@ public interface InterfaceRetrofit {
     //Save Admin
     @POST("registerAdmin")
     Call<Admin> SaveAdmin(@Body Admin admin);
+
+
+    @GET("reserves")
+    Call<List<Reserve>> ListReserves();
+
+
+    @POST("registerReserve")
+    Call<Reserve> SaveReserve(@Body Reserve reserve);
+
+
+    @GET("reserves/{email}")
+    Call<List<Reserve>> FindByReserveByEmail(@Path("email") String email);
 
 }

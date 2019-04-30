@@ -30,6 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -77,9 +78,13 @@ public class LandingMainActivity extends AppCompatActivity
 
         // Configure sign-in to request the user's ID, email address, and basic
 // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+
+        String serverClientId = getString(R.string.server_client_id); ;
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
+
+
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -94,14 +99,23 @@ public class LandingMainActivity extends AppCompatActivity
             {
                 StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                 StrictMode.setThreadPolicy(policy);
-                URL myFileUrl = new URL(account.getPhotoUrl().toString());
-                HttpURLConnection conn =
-                        (HttpURLConnection) myFileUrl.openConnection();
-                conn.setDoInput(true);
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                ImageView userPhoto = (ImageView) findViewById(R.id.userPhoto);
-                userPhoto.setImageBitmap(BitmapFactory.decodeStream(is));
+
+                if(account.getPhotoUrl() == null)
+                {
+
+                }
+                else
+                {
+                    URL myFileUrl = new URL(account.getPhotoUrl().toString());
+                    HttpURLConnection conn =
+                            (HttpURLConnection) myFileUrl.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    ImageView userPhoto = (ImageView) findViewById(R.id.userPhoto);
+                    userPhoto.setImageBitmap(BitmapFactory.decodeStream(is));
+                }
+
             }
 
 
@@ -194,24 +208,42 @@ public class LandingMainActivity extends AppCompatActivity
         }
         else
         {
-            Log.d("=TuPoint=>","Ya inicio Sesion");
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-            Log.d("=TuPoint=>",account.getDisplayName() + account.getEmail() +account.getPhotoUrl());
+            try
+            {
+                Log.d("=TuPoint=>","Ya inicio Sesion");
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+                Log.d("=TuPoint=>",account.getDisplayName() + account.getEmail() +account.getPhotoUrl());
 
-            //Save in SharedPreferences
-            SharedPreferences credentialsSP =
-                    getSharedPreferences("credentials",
-                            Context.MODE_PRIVATE);
-            SharedPreferences.Editor credentialsEditor = credentialsSP.edit();
-            credentialsEditor.putString("getDisplayName",account.getDisplayName());
-            credentialsEditor.putString("getEmail",account.getEmail());
-            credentialsEditor.putString("getPhotoUrl",account.getPhotoUrl().toString());
-            credentialsEditor.commit();
-            Toast.makeText(getApplicationContext(),
-                    "Login Sucefull" ,
-                    Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), LandingUserActivity.class);
-            startActivity(intent);
+                //Save in SharedPreferences
+                SharedPreferences credentialsSP =
+                        getSharedPreferences("credentials",
+                                Context.MODE_PRIVATE);
+                SharedPreferences.Editor credentialsEditor = credentialsSP.edit();
+                credentialsEditor.putString("getDisplayName",account.getDisplayName());
+                credentialsEditor.putString("getEmail",account.getEmail());
+                if(account.getPhotoUrl() == null)
+                {
+
+                }
+                else
+                {
+                    credentialsEditor.putString("getPhotoUrl",account.getPhotoUrl().toString());
+                }
+
+                credentialsEditor.commit();
+                Toast.makeText(getApplicationContext(),
+                        "Login Sucefull" ,
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), LandingUserActivity.class);
+                startActivity(intent);
+            }
+            catch (Exception e)
+            {
+                Log.d("=tuPoint=>",e.getMessage());
+            }
+
+
+
         }
 
     }
@@ -246,6 +278,7 @@ public class LandingMainActivity extends AppCompatActivity
                     getSharedPreferences("credentials",
                             Context.MODE_PRIVATE);
             SharedPreferences.Editor credentialsEditor = credentialsSP.edit();
+
             credentialsEditor.putString("getDisplayName",account.getDisplayName());
             credentialsEditor.putString("getEmail",account.getEmail());
             credentialsEditor.putString("getPhotoUrl",account.getPhotoUrl().toString());

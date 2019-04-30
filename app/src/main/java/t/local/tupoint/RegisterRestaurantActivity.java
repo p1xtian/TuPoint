@@ -267,6 +267,9 @@ public class RegisterRestaurantActivity extends AppCompatActivity {
                                         eT_terraza.setChecked(false);
                                         eT_aireacondicionado.setChecked(false);
 
+                                        Intent intent = new Intent(getApplicationContext(), LandingAdminActivity.class);
+                                        startActivity(intent );
+
                                     }
 
 

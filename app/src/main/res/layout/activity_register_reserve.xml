@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/logo"
-            android:onClick="LoadLogo"/>
+            />
 
         //Email
 
@@ -57,7 +57,7 @@
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@+id/eT_razon"
+                android:id="@+id/spi_razon"
                 android:layout_width="244dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
@@ -135,8 +135,6 @@
                 android:layout_marginTop="0.5dp"
                 android:layout_weight="1"
                 android:backgroundTint="#F4F6F6"
-                android:editable="false
-"
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="datetime"
@@ -147,38 +145,6 @@
         //Descripcion
 
         //Mesas
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="0dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/riffic"
-                android:text="Mesas:"
-                android:textColor="#F7F9F9"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/eT_mesas"
-                android:layout_width="244dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="45dp"
-                android:layout_marginTop="0.5dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:backgroundTint="#F4F6F6"
-                android:textColor="#F4F6F6"
-                android:textSize="15dp"
-                android:inputType="number" />
-
-        </LinearLayout>
 
         //Aforo
 
@@ -200,7 +166,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/eT_aforo"
+                android:id="@+id/eT_comensales"
                 android:layout_width="87dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -214,15 +180,7 @@
 
         </LinearLayout>
 
-        //Garaje
 
-        //Terraza
-
-        //Aire Acondicionado
-
-        //Google Maps
-
-        //Botones
 
         <LinearLayout
             android:layout_width="wrap_content"

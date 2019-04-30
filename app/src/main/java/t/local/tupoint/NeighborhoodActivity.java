@@ -153,7 +153,7 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
 
         services.ListRestaurants().enqueue(new retrofit2.Callback<List<Restaurant>>() {
             @Override
-            public void onResponse(retrofit2.Call<List<Restaurant>> call, retrofit2.Response<List<Restaurant>> response) {
+            public void onResponse(retrofit2.Call<List<Restaurant>> call, final retrofit2.Response<List<Restaurant>> response) {
 
 
 
@@ -225,13 +225,53 @@ public class NeighborhoodActivity extends FragmentActivity implements OnMapReady
 // Getting reference to the TextView to set longitude
                             TextView tvLng = (TextView) v.findViewById(R.id.iWDireccion);
 
+                            TextView iWDescripcion = (TextView) v.findViewById(R.id.iWDescripcion);
+
                             ImageView ivEmpresa = (ImageView) v.findViewById(R.id.iWLogo);
+
+                            TextView iWGaraje = (TextView) v.findViewById(R.id.iWGaraje);
+                            TextView iWTerraza = (TextView) v.findViewById(R.id.iWTerraza);
+                            TextView iWAire = (TextView) v.findViewById(R.id.iWAire);
+
+
 
 // Setting the latitude
                             tvLat.setText(restaurant.getRazonsocial());
 
 // Setting the longitude
                             tvLng.setText(restaurant.getDireccion());
+
+
+                            iWDescripcion.setText(restaurant.getDescripcion());
+
+                            if(restaurant.getGaraje().equals("true"))
+                            {
+                                iWGaraje.setText("Garaje: SI");
+                            }
+                            else
+                            {
+                                iWGaraje.setText("Garaje: NO");
+                            }
+
+                            if(restaurant.getTerraza().equals("true"))
+                            {
+                                iWTerraza.setText("Terraza: SI");
+                            }
+                            else
+                            {
+                                iWTerraza.setText("Terraza: NO");
+                            }
+
+                            if(restaurant.getAireacondicionado().equals("true"))
+                            {
+                                iWAire.setText("Aire AC: SI");
+                            }
+                            else
+                            {
+                                iWAire.setText("Aire AC: NO");
+                            }
+
+
 
 
                             HelperBase64 helperBase64 = new HelperBase64();

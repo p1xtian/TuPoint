@@ -28,4 +28,5 @@
     <string name="title_activity_admin_landing">AdminLandingActivity</string>
     <string name="title_activity_landing_admin">LandingAdminActivity</string>
     <string name="title_activity_landing_main">LandingMainActivity</string>
+    <string name="server_client_id">1024988343327-ivden7rql25dm36odh3kr3i1o47iv0ia.apps.googleusercontent.com</string>
 </resources>

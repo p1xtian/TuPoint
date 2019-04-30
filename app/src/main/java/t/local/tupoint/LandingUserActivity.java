@@ -130,6 +130,8 @@ public class LandingUserActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(),
                     "Reservas" ,
                     Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), ReservesUsersActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_cerca) {
             Toast.makeText(getApplicationContext(),
                     "Cerca De Mi" ,
